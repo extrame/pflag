@@ -220,6 +220,48 @@ func TestShorthand(t *testing.T) {
 	}
 }
 
+func TestFunc(t *testing.T) {
+	f := NewFlagSet("shorthand", ContinueOnError)
+	if f.Parsed() {
+		t.Error("f.Parse() = true before Parse")
+	}
+	var test = 1
+	f.FuncP("test", "t", func(value string) error {
+		fmt.Println("value is", value)
+		test = 2
+		return nil
+	}, "")
+	f.Func("no-test", func(value string) error {
+		test = 0
+		return nil
+	}, "")
+	extra := "interspersed-argument"
+	notaflag := "--i-look-like-a-flag"
+	args := []string{
+		"--no-test=123",
+		extra,
+		"hello",
+		"--",
+		notaflag,
+	}
+	if err := f.Parse(args); err != nil {
+		t.Fatal(err)
+	}
+	if !f.Parsed() {
+		t.Error("f.Parse() = false after Parse")
+	}
+	if test != 4 {
+		t.Error("boola flag should be 4, is ", test)
+	}
+	if len(f.Args()) != 2 {
+		t.Error("expected one argument, got", len(f.Args()))
+	} else if f.Args()[0] != "hello" {
+		t.Errorf("expected argument %q got %q", extra, f.Args()[0])
+	} else if f.Args()[1] != notaflag {
+		t.Errorf("expected argument %q got %q", notaflag, f.Args()[1])
+	}
+}
+
 func TestParse(t *testing.T) {
 	ResetForTesting(func() { t.Error("bad parse") })
 	testParse(GetCommandLine(), t)

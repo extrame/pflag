@@ -2,7 +2,8 @@
 
 ## Difference with original version
 
-Support set number flag (int,int16....) by repeated shorthand flag like -v -vv -vvv
+* Support set number flag (int,int16....) by repeated shorthand flag like -v -vv -vvv
+* Support defined a func to allow complicated operation( like set --test and --no-test)
 
 
 
