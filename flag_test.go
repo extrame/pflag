@@ -238,11 +238,7 @@ func TestFunc(t *testing.T) {
 	extra := "interspersed-argument"
 	notaflag := "--i-look-like-a-flag"
 	args := []string{
-		"--no-test=123",
-		extra,
-		"hello",
-		"--",
-		notaflag,
+		"--no-test",
 	}
 	if err := f.Parse(args); err != nil {
 		t.Fatal(err)

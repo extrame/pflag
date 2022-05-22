@@ -508,7 +508,11 @@ func (f *FlagSet) parseArgs(args []string) error {
 				return f.failf("unknown flag: --%s", name)
 			}
 			if len(split) == 1 {
-				if bv, ok := flag.Value.(boolFlag); !ok || !bv.IsBoolFlag() {
+
+				bv, isBoolFlag := flag.Value.(boolFlag)
+				_, isFuncFlag := flag.Value.(funcValue)
+
+				if !(isBoolFlag && bv.IsBoolFlag() || isFuncFlag) {
 					return f.failf("flag needs an argument: %s", s)
 				}
 				f.setFlag(flag, "true", s)
