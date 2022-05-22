@@ -529,6 +529,33 @@ func (f *FlagSet) parseArgs(args []string) error {
 					}
 					return f.failf("unknown shorthand flag: %q in -%s", c, shorthands)
 				}
+
+				if iv, ok := flag.Value.(intFlag); ok {
+					var count = 1
+					for j := i + 1; j < len(shorthands); j++ {
+						if shorthands[j] == c {
+							count++
+						} else {
+							i = j - 1 // should be j, but will add 1 in 'for', so -1
+							break
+						}
+					}
+					iv.SetInt(int64(count))
+					continue
+				}
+				if iv, ok := flag.Value.(uintFlag); ok {
+					var count = 1
+					for j := i + 1; j < len(shorthands); j++ {
+						if shorthands[j] == c {
+							count++
+						} else {
+							i = j
+							break
+						}
+					}
+					iv.SetUint(uint64(count))
+					continue
+				}
 				if bv, ok := flag.Value.(boolFlag); ok && bv.IsBoolFlag() {
 					f.setFlag(flag, "true", s)
 					continue

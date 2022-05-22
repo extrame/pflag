@@ -179,14 +179,14 @@ func TestShorthand(t *testing.T) {
 	if f.Parsed() {
 		t.Error("f.Parse() = true before Parse")
 	}
-	boolaFlag := f.BoolP("boola", "a", false, "bool value")
+	boolaFlag := f.IntP("boola", "a", 1, "bool value")
 	boolbFlag := f.BoolP("boolb", "b", false, "bool2 value")
 	boolcFlag := f.BoolP("boolc", "c", false, "bool3 value")
 	stringFlag := f.StringP("string", "s", "0", "string value")
 	extra := "interspersed-argument"
 	notaflag := "--i-look-like-a-flag"
 	args := []string{
-		"-ab",
+		"-aaaab",
 		extra,
 		"-cs",
 		"hello",
@@ -199,8 +199,8 @@ func TestShorthand(t *testing.T) {
 	if !f.Parsed() {
 		t.Error("f.Parse() = false after Parse")
 	}
-	if *boolaFlag != true {
-		t.Error("boola flag should be true, is ", *boolaFlag)
+	if *boolaFlag != 4 {
+		t.Error("boola flag should be 4, is ", *boolaFlag)
 	}
 	if *boolbFlag != true {
 		t.Error("boolb flag should be true, is ", *boolbFlag)

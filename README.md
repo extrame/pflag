@@ -1,5 +1,11 @@
 [![Build Status](https://travis-ci.org/ogier/pflag.png?branch=master)](https://travis-ci.org/ogier/pflag)
 
+## Difference with original version
+
+Support set number flag (int,int16....) by repeated shorthand flag like -v -vv -vvv
+
+
+
 ## Description
 
 pflag is a drop-in replacement for Go's flag package, implementing

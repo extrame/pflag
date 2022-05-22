@@ -19,6 +19,10 @@ func (i *int64Value) Set(s string) error {
 	return err
 }
 
+func (i *int64Value) SetInt(v int64) {
+	*i = int64Value(v)
+}
+
 func (i *int64Value) String() string { return fmt.Sprintf("%v", *i) }
 
 // Int64Var defines an int64 flag with specified name, default value, and usage string.

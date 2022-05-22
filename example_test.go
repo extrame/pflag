@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	flag "github.com/ogier/pflag"
+	flag "github.com/extrame/pflag"
 )
 
 // Example 1: A single string flag called "species" with default value "gopher".

@@ -22,6 +22,10 @@ func (i *uint16Value) Get() interface{} {
 	return uint16(*i)
 }
 
+func (i *uint16Value) SetUint(u uint64) {
+	*i = uint16Value(u)
+}
+
 // Uint16Var defines a uint flag with specified name, default value, and usage string.
 // The argument p points to a uint variable in which to store the value of the flag.
 func (f *FlagSet) Uint16Var(p *uint16, name string, value uint16, usage string) {

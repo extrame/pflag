@@ -6,6 +6,10 @@ import (
 )
 
 // -- int Value
+type intFlag interface {
+	SetInt(v int64)
+}
+
 type intValue int
 
 func newIntValue(val int, p *int) *intValue {
@@ -17,6 +21,10 @@ func (i *intValue) Set(s string) error {
 	v, err := strconv.ParseInt(s, 0, 64)
 	*i = intValue(v)
 	return err
+}
+
+func (i *intValue) SetInt(v int64) {
+	*i = intValue(v)
 }
 
 func (i *intValue) String() string { return fmt.Sprintf("%v", *i) }

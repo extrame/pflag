@@ -8,6 +8,10 @@ import (
 // -- uint Value
 type uintValue uint
 
+type uintFlag interface {
+	SetUint(v uint64)
+}
+
 func newUintValue(val uint, p *uint) *uintValue {
 	*p = val
 	return (*uintValue)(p)
@@ -17,6 +21,10 @@ func (i *uintValue) Set(s string) error {
 	v, err := strconv.ParseUint(s, 0, 64)
 	*i = uintValue(v)
 	return err
+}
+
+func (i *uintValue) SetUint(u uint64) {
+	*i = uintValue(u)
 }
 
 func (i *uintValue) String() string { return fmt.Sprintf("%v", *i) }
