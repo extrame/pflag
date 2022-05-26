@@ -541,9 +541,11 @@ func (f *FlagSet) parseArgs(args []string) error {
 							count++
 						} else {
 							i = j - 1 // should be j, but will add 1 in 'for', so -1
-							break
+							goto setCount
 						}
 					}
+					i = len(shorthands)
+				setCount:
 					iv.SetInt(int64(count))
 					continue
 				}
