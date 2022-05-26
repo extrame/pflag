@@ -564,6 +564,10 @@ func (f *FlagSet) parseArgs(args []string) error {
 					f.setFlag(flag, "true", s)
 					continue
 				}
+				if _, ok := flag.Value.(funcValue); ok {
+					f.setFlag(flag, "true", s)
+					continue
+				}
 				if i < len(shorthands)-1 {
 					if err := f.setFlag(flag, shorthands[i+1:], s); err != nil {
 						return err
