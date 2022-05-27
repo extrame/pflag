@@ -507,7 +507,12 @@ func (f *FlagSet) parseArgs(args []string) error {
 					f.usage()
 					return ErrHelp
 				}
-				return f.failf("unknown flag: --%s", name)
+				if f.errorHandling != ContinueOnError {
+					return f.failf("unknown flag: --%s", name)
+				} else {
+					f.args = append(f.args, s)
+					continue
+				}
 			}
 			if len(split) == 1 {
 
@@ -533,7 +538,12 @@ func (f *FlagSet) parseArgs(args []string) error {
 						f.usage()
 						return ErrHelp
 					}
-					return f.failf("unknown shorthand flag: %q in -%s", c, shorthands)
+					if f.errorHandling != ContinueOnError {
+						return f.failf("unknown shorthand flag: %q in -%s", c, shorthands)
+					} else {
+						f.args = append(f.args, s)
+						continue
+					}
 				}
 
 				if iv, ok := flag.Value.(intFlag); ok {
