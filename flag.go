@@ -476,6 +476,7 @@ func (f *FlagSet) setFlag(flag *Flag, value string, origArg string) error {
 }
 
 func (f *FlagSet) parseArgs(args []string) error {
+loopArg:
 	for len(args) > 0 {
 		s := args[0]
 		args = args[1:]
@@ -542,7 +543,7 @@ func (f *FlagSet) parseArgs(args []string) error {
 						return f.failf("unknown shorthand flag: %q in -%s", c, shorthands)
 					} else {
 						f.args = append(f.args, s)
-						continue
+						continue loopArg
 					}
 				}
 
